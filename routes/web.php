@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,13 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-//仮ルート　コントローラ作成時に置き換え
-Route::middleware('auth')->group(function () {
+
+
+Route::middleware('auth')->group(function(){
+    //カテゴリーのCRUDルート
+    Route::resource('categories',CategoryController::class);
+
+    //タスクの仮ルート
     Route::get('/tasks', fn() => 'タスク一覧（準備中）')->name('tasks.index');
-    Route::get('/categories', fn() => 'カテゴリー一覧（準備中）')->name('categories.index');
+
 });
