@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::middleware('auth')->group(function(){
     //カテゴリーのCRUDルート
     Route::resource('categories',CategoryController::class);
 
-    //タスクの仮ルート
-    Route::get('/tasks', fn() => 'タスク一覧（準備中）')->name('tasks.index');
+    //タスクのCRUDルート
+    Route::resource('tasks',TaskController::class);
 
 });
