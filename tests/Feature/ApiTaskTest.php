@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
@@ -17,7 +18,7 @@ class ApiTaskTest extends TestCase
      * A basic feature test example.
      */
 
-    /** @test */
+    #[Test]
     public function タスク一覧をJSON形式で取得できる(): void
     {
         $user = User::factory()->create();
@@ -33,7 +34,7 @@ class ApiTaskTest extends TestCase
         $response->assertJsonCount(3,'data');
     }
 
-    /** @test */
+    #[Test]
     public function タスク一覧のJSONレスポンス構造が正しい(): void
     {
         $user = User::factory()->create();
@@ -65,7 +66,7 @@ class ApiTaskTest extends TestCase
 
     }
 
-    /** @test */
+    #[Test]
     public function タスク一覧のJSONレスポンス内容が正しい(): void
     {
         $user = User::factory()->create();
@@ -104,7 +105,7 @@ class ApiTaskTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function タスクが０件の場合は空の配列を返す(): void
     {
         $response = $this->getJson('/api/tasks');
@@ -114,7 +115,7 @@ class ApiTaskTest extends TestCase
         $response->assertJson(['data' => []]);
     }
 
-    /** @test */
+    #[Test]
     public function 特定のタスクをJSON形式で取得できる(): void
     {
         $user = User::factory()->create();
@@ -145,7 +146,7 @@ class ApiTaskTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function 特定のタスクのJSONレスポンス内容が正しい(): void
     {
         $user = User::factory()->create();
@@ -176,7 +177,7 @@ class ApiTaskTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function 存在しないタスクIDで404エラーを返す(): void
     {
         $response = $this->getJson('/api/tasks/99999');
@@ -184,7 +185,7 @@ class ApiTaskTest extends TestCase
         $response->assertNotFound();
     }
 
-    /** @test */
+    #[Test]
     public function 無効なタスクIDで404エラーを返す(): void
     {
         $response = $this->getJson('/api/tasks/invalid');

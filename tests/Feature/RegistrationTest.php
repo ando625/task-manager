@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -15,7 +16,7 @@ class RegistrationTest extends TestCase
      * A basic feature test example.
      */
 
-    /** @test */
+    #[Test]
     public function 登録画面を表示できる(): void
     {
         $response = $this->get(route('register'));
@@ -23,7 +24,7 @@ class RegistrationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function 新規ユーザーが登録できる(): void
     {
         $response = $this->post(route('register'),[
@@ -41,7 +42,7 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /** @test */
+    #[Test]
     public function 名前が空だとバリデーションエラーになる(): void
     {
         $response = $this->post(route('register'),[
@@ -54,7 +55,7 @@ class RegistrationTest extends TestCase
         $response->assertSessionHasErrors('name');
     }
 
-    /** @test */
+    #[Test]
     public function メールアドレスが空だとバリデーションエラーになる(): void
     {
         $response = $this->post(route('register'), [
@@ -67,7 +68,7 @@ class RegistrationTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 
-    /** @test */
+    #[Test]
     public function 無効なメールアドレスだとバリデーションエラーになる(): void
     {
         $response = $this->post(route('register'), [
@@ -81,7 +82,7 @@ class RegistrationTest extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function すでに登録済みのメールアドレスだとバリデーションエラーになる(): void
     {
         $user = User::factory()->create(['email' => 'existing@example.com']);
@@ -97,7 +98,7 @@ class RegistrationTest extends TestCase
 
     }
 
-    /** @test */
+    #[Test]
     public function パスワードが8文字未満だとバリデーションエラーになる(): void
     {
         $response = $this->post(route('register'),[
@@ -110,7 +111,7 @@ class RegistrationTest extends TestCase
         $response->assertSessionHasErrors('password');
     }
 
-    /** @test */
+    #[Test]
     public function パスワード確認が一致しないとバリデーションエラーになる(): void
     {
         $response = $this->post(route('register'), [
