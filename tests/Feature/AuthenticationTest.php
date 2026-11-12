@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -14,7 +15,7 @@ class AuthenticationTest extends TestCase
      * A basic feature test example.
      */
 
-    /** @test */
+    #[Test]
     public function ログイン画面を表示できる(): void
     {
         $response = $this->get(route('login'));
@@ -22,7 +23,7 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function 正しい認証情報でログインできる(): void
     {
         $user = User::factory()->create([
@@ -39,7 +40,7 @@ class AuthenticationTest extends TestCase
 
     }
 
-    /** @test */
+    #[Test]
     public function 間違ったパスワードではログインできない(): void
     {
         $user = User::factory()->create([
@@ -54,7 +55,7 @@ class AuthenticationTest extends TestCase
         $this->assertGuest(); //ゲスト、認証されていないかどうか
     }
 
-    /** @test */
+    #[Test]
     public function 存在しないメールアドレスではログインできない(): void
     {
         $response = $this->post(route('login'),[
@@ -66,7 +67,7 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
+    #[Test]
     public function メールアドレスが空だとバリデーションエラーになる(): void
     {
         $response = $this->post(route('login'),[
@@ -77,7 +78,7 @@ class AuthenticationTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 
-    /** @test */
+    #[Test]
     public function パスワードが空だとバリデーションエラーになる(): void
     {
         $user = User::factory()->create();
@@ -90,7 +91,7 @@ class AuthenticationTest extends TestCase
         $response->assertSessionHasErrors('password');
     }
 
-    /** @test */
+    #[Test]
     public function ログアウトできる(): void
     {
         $user = User::factory()->create();
@@ -101,7 +102,7 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
+    #[Test]
     public function 認証済みユーザーはログインページにアクセスするとリダイレクトされる(): void
     {
         $user = User::factory()->create();
