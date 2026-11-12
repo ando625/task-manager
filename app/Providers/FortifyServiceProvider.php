@@ -41,6 +41,12 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($throttleKey);
         });
 
+        // 2段階認証の試行制限（config/fortify.php の limiters で指定している名前。
+        // Laravel 11 からは、定義されていない名前を指定するとエラーになる）
+        RateLimiter::for('two-factor', function (Request $request) {
+            return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
         //認証ビューの設定
         Fortify::loginView(function(){
             return view('auth.login');

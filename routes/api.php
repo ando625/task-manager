@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('tasks',TaskController::class)->only(['index','show']);
+// 画面用（routes/web.php）の tasks.index などと名前が重ならないよう、API 側は api.tasks.* にする。
+// Laravel 12 からは同じ名前のルートがあると先に登録された API 側が使われ、画面のリンクが /api/tasks になるため
+Route::apiResource('tasks',TaskController::class)->only(['index','show'])->names('api.tasks');
